@@ -1,0 +1,15 @@
+{
+  "url": "",
+  "format": "json",
+  "output": "",
+  "heading": null,
+  "id": null,
+  "cells": "1-256",
+  "newlines": false,
+  "trim": true,
+  "RowAsObject.hasHeader": true,
+  "RowAsObject.headers": null,
+  "RepeatCell.column": null,
+  "RepeatHeading.header": null,
+  "RepeatHeading.hasHeader": true
+}

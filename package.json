@@ -1,0 +1,32 @@
+{
+  "name": "xlsx-data-parser",
+  "version": "1.0.0",
+  "description": "Parse, search and stream tabular sheet data using Node.js and xlsx library.",
+  "main": "index.js",
+  "scripts": {
+    "test": "testrunner.bat"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dictadata/xlsx-data-parser.git"
+  },
+  "keywords": [
+    "dictadata",
+    "xlsx",
+    "xls",
+    "parser"
+  ],
+  "author": "Drew O. Letcher",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dictadata/xlsx-data-parser/issues"
+  },
+  "homepage": "https://github.com/dictadata/xlsx-data-parser#readme",
+  "devDependencies": {
+    "eslint": "^9.8.0"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "xlsx": "^0.18.5"
+  }
+}
