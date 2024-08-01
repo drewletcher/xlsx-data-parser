@@ -52,12 +52,14 @@ async function parseArgs() {
       if (nv[ 0 ] === "--options") {
         Object.assign(options, JSON.parse(await readFile(nv[ 1 ])));
       }
+      else if (nv[ 0 ] === "--sheet")
+        options.sheetName = parseInt(nv[ 1 ]);
+      else if (nv[ 0 ] === "--range")
+        options.range = parseInt(nv[ 1 ]);
       else if (nv[ 0 ] === "--cells")
         options.cells = parseInt(nv[ 1 ]);
       else if (nv[ 0 ] === "--heading")
         options.heading = nv[ 1 ];
-      else if (nv[ 0 ] === "--id")
-        options.id = nv[ 1 ];
       else if (nv[ 0 ].includes("--headers"))
         options.headers = nv[ 1 ].split(",");
       else if (nv[ 0 ] === "--format")
@@ -92,8 +94,9 @@ async function parseArgs() {
     console.log("  --options    - file containing JSON object with xdp options, optional.");
     console.log("  filename|URL - path name or URL of XLSX file to process, required.");
     console.log("  output       - local path name for output of parsed data, default stdout.");
+    console.log("  --sheet      - sheet name (tab) in workbook to process");
+    console.log("  --range      - data selection, A1-style range, e.g. \"A3:M24\", default all rows/columns.")
     console.log("  --heading    - text of heading to find in document that precedes desired data table, default none.");
-    console.log("  --id         - TABLE element id attribute to find in document.");
     console.log("  --cells      - minimum number of cells for a data row, default = 1.");
     console.log("  --headers    - comma separated list of column names for data, default none first table row contains names.");
     console.log("  --format     - output data format JSON, CSV or rows (JSON arrays), default JSON.");

@@ -2,26 +2,24 @@
  * test/testReader.js
  */
 
-const HtmlDataReader = require("../lib/HtmlDataReader");
+const XlsxDataReader = require("../lib/XlsxDataReader");
 const FormatJSON = require('../lib/FormatJSON');
 const { finished } = require('stream/promises');
 const fs = require("fs");
 const path = require("path");
 const compareFiles = require("./_compareFiles");
 
+var count = 0;
+
 async function test(options) {
-  let outputName = path.parse(options.url || options.data).name;
+  ++count;
+  let outputName = path.parse(options.url).name + count;
 
-  if (options.data) {
-    options.data = fs.readFileSync(options.data);
-    outputName += "_data";
-  }
-
-  let reader = new HtmlDataReader(options);
+  let reader = new XlsxDataReader(options);
 
   let transform = new FormatJSON();
 
-  let outputFile = "./test/output/HtmlDataReader/" + outputName + ".json";
+  let outputFile = "./test/output/XlsxDataReader/" + outputName + ".json";
   console.log("output: " + outputFile);
   fs.mkdirSync(path.dirname(outputFile), { recursive: true });
   let writer = fs.createWriteStream(outputFile, { encoding: "utf-8", autoClose: false });
@@ -35,12 +33,10 @@ async function test(options) {
 }
 
 (async () => {
-  if (await test({ url: "./test/data/html/helloworld.html", id: "global" })) return 1;
-  if (await test({ url: "https://www.census.gov/library/reference/code-lists/ansi.html" })) return 1;
-  if (await test({ url: "https://www.sos.state.tx.us/elections/historical/jan2024.shtml" })) return 1;
+  if (await test({ url: "./test/data/xlsx/HelloWorld.xlsx" })) return 1;
+  if (await test({ url: "./test/data/xlsx/foofile.xlsx" })) return 1;
+  if (await test({ url: "./test/data/xlsx/foofile.xls", sheetName: "foo", missingCells: true })) return 1;
 
-  if (await test({ data: "./test/data/html/helloworld.html", id: /co..ic/ })) return 1;
-  if (await test({ data: "./test/data/html/ansi.html", heading: "Congressional Districts" })) return 1;
-  if (await test({ data: "./test/data/html/texas_jan2024.shtml" })) return 1;
+  if (await test({ url: "http://dev.dictadata.net/dictadata/test/data/input/foofile.xlsx", http: { auth: "dicta:data" }, missingCells: true })) return 1;
 
 })();

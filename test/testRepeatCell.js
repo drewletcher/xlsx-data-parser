@@ -2,7 +2,7 @@
  * test/optionsRepeatCell.js
  */
 
-const { HtmlDataReader, RowAsObjectTransform, RepeatCellTransform } = require("../lib");
+const { XlsxDataReader, RowAsObjectTransform, RepeatCellTransform } = require("../lib");
 const FormatJSON = require('../lib/FormatJSON');
 const { pipeline } = require('node:stream/promises');
 const fs = require("fs");
@@ -11,7 +11,7 @@ const compareFiles = require("./_compareFiles");
 
 async function test(options) {
 
-  let reader = new HtmlDataReader(options);
+  let reader = new XlsxDataReader(options);
 
   let transform1 = new RepeatCellTransform(options);
   let transform2 = new RowAsObjectTransform(options);
@@ -31,9 +31,10 @@ async function test(options) {
 
 (async () => {
   if (await test({
-    "url": "./test/data/html/az_jan2024.htm",
-    "heading": "Counties - Active",
-    "cells": "9-10",
+    url: "./test/data/xlsx/State_Voter_Registration_July_2024.xlsx",
+    hasHeader: true,
+    heading: "Active",
+    cells: 9,
     "RepeatCell.column": 0
   })) return 1;
 })();

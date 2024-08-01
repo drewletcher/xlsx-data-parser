@@ -1,7 +1,8 @@
 {
-  "url": "./test/data/html/az_jan2024.htm",
-  "heading": "Counties - Active",
+  "url": "./test/data/xlsx/State_Voter_Registration_July_2024.xlsx",
+  "hasHeader": true,
+  "heading": "Active",
   "cells": 9,
   "RepeatCell.column": 0,
-  "output": "./test/output/hdp/repeat_cell.json"
+  "output": "./test/output/xdp/repeat_cell.json"
 }

@@ -1,6 +1,8 @@
 {
-  "url": "./test/data/html/az_jan2024.htm",
-  "heading": "Congressional Districts - Active",
+  "url": "./test/data/xlsx/State_Voter_Registration_July_2024.xlsx",
+  "range": "A77:S134",
+  "hasHeader": true,
+  "missingCells": false,
   "RepeatHeading.header": "County:1:0",
-  "output": "./test/output/hdp/repeat_heading.json"
+  "output": "./test/output/xdp/repeat_heading.json"
 }

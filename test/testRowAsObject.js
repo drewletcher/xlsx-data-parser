@@ -2,23 +2,20 @@
  * test/testObjectTransform.js
  */
 
-const { HtmlDataReader, RowAsObjectTransform } = require("../lib");
+const { XlsxDataReader, RowAsObjectTransform } = require("../lib");
 const FormatJSON = require('../lib/FormatJSON');
 const { pipeline } = require('node:stream/promises');
 const fs = require("fs");
 const path = require("path");
 const compareFiles = require("./_compareFiles");
 
+var count = 0;
+
 async function test(options) {
-  let outputName = path.parse(options.url || options.data).name;
+  ++count;
+  let outputName = path.parse(options.url).name + count;
 
-  if (options.data) {
-    options.data = fs.readFileSync(options.data);
-    //options.data = new Uint8Array(fs.readFileSync(options.data));
-    outputName += "_data";
-  }
-
-  let reader = new HtmlDataReader(options);
+  let reader = new XlsxDataReader(options);
 
   let transform1 = new RowAsObjectTransform(options);
   let transform2 = new FormatJSON();
@@ -36,9 +33,18 @@ async function test(options) {
 }
 
 (async () => {
-  if (await test({ url: "./test/data/html/helloworld.html", id: "global", headers: [ "Greeting" ] })) return 1;
-  if (await test({ data: "./test/data/html/helloworld.html", id: "cosmic", headers: [ "BigBang" ] })) return 1;
-  if (await test({ url: "./test/data/html/ansi.html", heading: "Congressional Districts" })) return 1;
-  if (await test({ url: "./test/data/html/texas_jan2024.shtml" })) return 1;
+  if (await test({ url: "./test/data/xlsx/HelloWorld.xlsx", headers: ["Greating"] })) return 1;
+  if (await test({ url: "./test/data/xlsx/foofile.xlsx" })) return 1;
+  if (await test({ url: "./test/data/xlsx/foofile.xls", sheetName: "foo", missingCells: true })) return 1;
 
+  if (await test({ url: "http://dev.dictadata.net/dictadata/test/data/input/foofile.xlsx", http: { auth: "dicta:data" }, missingCells: true })) return 1;
+
+  if (await test({
+    url: "./test/data/xlsx/State_Voter_Registration_July_2024.xlsx",
+    range: "A6:R70",
+    cells: "9-10",
+    hasHeader: true,
+    missingCells: false,
+    cellDates: false,
+  })) return 1;
 })();

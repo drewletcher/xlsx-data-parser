@@ -2,7 +2,7 @@
  * test/optionsRepeatHeading.js
  */
 
-const { HtmlDataReader, RowAsObjectTransform, RepeatHeadingTransform } = require("../lib");
+const { XlsxDataReader, RowAsObjectTransform, RepeatHeadingTransform } = require("../lib");
 const FormatJSON = require('../lib/FormatJSON');
 const { pipeline } = require('node:stream/promises');
 const fs = require("fs");
@@ -11,7 +11,7 @@ const compareFiles = require("./_compareFiles");
 
 async function test(options) {
 
-  let reader = new HtmlDataReader(options);
+  let reader = new XlsxDataReader(options);
 
   let transform1 = new RepeatHeadingTransform(options);
   let transform2 = new RowAsObjectTransform(options);
@@ -31,8 +31,10 @@ async function test(options) {
 
 (async () => {
   if (await test({
-    "url": "./test/data/html/az_jan2024.htm",
-    "heading": "Congressional Districts - Active",
+    url: "./test/data/xlsx/State_Voter_Registration_July_2024.xlsx",
+    range: "A77:S134",
+    hasHeader: true,
+    missingCells: false,
     "RepeatHeading.header": "County:1:0"
   })) return 1;
 })();

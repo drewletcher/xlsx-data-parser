@@ -2,14 +2,25 @@
   "url": "",
   "format": "json",
   "output": "",
+  "sheetName": null,
+  "range": null,
   "heading": null,
-  "id": null,
+  "stopHeading": null,
   "cells": "1-256",
-  "newlines": false,
+  "missingCells": false,
   "trim": true,
+  "raw": false,
   "RowAsObject.hasHeader": true,
   "RowAsObject.headers": null,
   "RepeatCell.column": null,
   "RepeatHeading.header": null,
-  "RepeatHeading.hasHeader": true
+  "RepeatHeading.hasHeader": true,
+  "http": {
+    "method": "GET",
+    "headers": {},
+    "timeout": 5000
+  },
+  "xlsx": {
+    "cellDates": true
+  }
 }

@@ -7,11 +7,121 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "getCells (raw)",
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${file}"
+      "program": "${workspaceFolder}/test/getCells.js"
+    },
+    {
+      "type": "node-terminal",
+      "name": "---",
+      "request": "launch"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "XlsxDataParser",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/test/testDataParser.js"
+    },
+    {
+      "type": "node",
+      "name": "XlsxDataReader",
+      "program": "${workspaceFolder}/test/testDataReader.js",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "type": "node",
+      "name": "RowAsObjectTransform",
+      "program": "${workspaceFolder}/test/testRowAsObject.js",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "type": "node",
+      "name": "RepeatCellTransform",
+      "program": "${workspaceFolder}/test/testRepeatCell.js",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "type": "node",
+      "name": "RepeatHeadingTransform",
+      "program": "${workspaceFolder}/test/testRepeatHeading.js",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "type": "node-terminal",
+      "name": "---",
+      "request": "launch"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "xdp helloworld json",
+      "program": "xlsx-data-parser.js",
+      "args": [ ".\\test\\data\\xlsx\\helloworld.xlsx", "--headers=Greating" ],
+      "outputCapture": "std",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "xdp helloworld csv",
+      "program": "xlsx-data-parser.js",
+      "args": [ ".\\test\\data\\xlsx\\helloworld.xlsx", "--headers=Greating", "--format=csv" ],
+      "outputCapture": "std",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "xdp helloworld rows",
+      "program": "xlsx-data-parser.js",
+      "args": [ ".\\test\\data\\xlsx\\helloworld.xlsx", "--format=rows" ],
+      "outputCapture": "std",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "xdp RepeatCell",
+      "program": "xlsx-data-parser.js",
+      "args": [ "--options=.\\test\\optionsRepeatCell.json" ],
+      "outputCapture": "std",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "xdp RepeatHeading",
+      "program": "xlsx-data-parser.js",
+      "args": [ "--options=.\\test\\optionsRepeatHeading.json" ],
+      "outputCapture": "std",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     }
   ]
 }
