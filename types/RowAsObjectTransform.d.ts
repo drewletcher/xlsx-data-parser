@@ -1,18 +1,18 @@
 declare const _exports: {
     new (options?: {
-        hasHeader?: object | undefined;
+        hasHeader?: Object | undefined;
         headers?: string[] | undefined;
     } | undefined): {
         headers: any;
         hasHeader: any;
         /**
          * Internal call from streamWriter to process an object
-         * @param {*} row
-         * @param {*} encoding
-         * @param {*} callback
+         * @param {Object} row
+         * @param {String} encoding
+         * @param {Function} callback
          */
-        _transform(row: any, encoding: any, callback: any): void;
-        _headers: any;
+        _transform(row: Object, encoding: string, callback: Function): void;
+        _headers: Object | undefined;
     };
 };
 export = _exports;

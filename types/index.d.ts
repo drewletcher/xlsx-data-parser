@@ -23,13 +23,13 @@ export const XlsxDataReader: {
 };
 export const RowAsObjectTransform: {
     new (options?: {
-        hasHeader?: object | undefined;
+        hasHeader?: Object | undefined;
         headers?: string[] | undefined;
     } | undefined): {
         headers: any;
         hasHeader: any;
-        _transform(row: any, encoding: any, callback: any): void;
-        _headers: any;
+        _transform(row: Object, encoding: string, callback: Function): void;
+        _headers: Object | undefined;
     };
 };
 export const RepeatCellTransform: {
@@ -39,7 +39,7 @@ export const RepeatCellTransform: {
         column: any;
         repeatValue: string;
         prevLen: number;
-        _transform(row: any, encoding: any, callback: any): void;
+        _transform(row: Object, encoding: string, callback: Function): void;
     };
 };
 export const RepeatHeadingTransform: {
@@ -53,20 +53,20 @@ export const RepeatHeadingTransform: {
         hasHeader: any;
         subHeading: string;
         count: number;
-        _transform(row: any, encoding: any, callback: any): void;
+        _transform(row: Object, encoding: string, callback: Function): void;
     };
 };
 export const FormatCSV: {
     new (options: any): {
         first: boolean;
-        _transform(row: any, encoding: any, callback: any): void;
+        _transform(row: Object, encoding: string, callback: Function): void;
     };
 };
 export const FormatJSON: {
     new (options: any): {
         first: boolean;
-        _transform(row: any, encoding: any, callback: any): void;
-        _flush(callback: any): void;
+        _transform(row: Object, encoding: string, callback: Function): void;
+        _flush(callback: Function): void;
     };
 };
 //# sourceMappingURL=index.d.ts.map
