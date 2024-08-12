@@ -2,24 +2,24 @@ export = XlsxDataParser;
 declare class XlsxDataParser {
     /**
      *
-     * @param {object}     options
-     * @param {URL|string} options.url           the URL or local file name of the .xlsx file
-     * @param {object}     options.worksheet     XLSX worksheet object with cell properties
-     * @param {string}   [options.sheetName]     name of worksheet in workbook, default 1st worksheet
-     * @param {string}   [options.range]         data selection, A1-style range, e.g. "A3:M24", default all rows/columns
-     * @param {number|string} [options.cells]    minimum number cells in a row for output, or "min-max" e.g. "7-9"
-     * @param {boolean}  [options.missingCells]  insert null values for missing cells
-     * @param {string}   [options.heading]       PDF section heading or text before data table, default: none
-     * @param {string}   [options.stopHeading]   PDF section heading or text after data table, default: none
-     * @param {boolean}  [options.repeating]     indicates if table headers are repeated on each page, default: false
-     * @param {boolean}  [options.trim]          trim cell values, default true
-     * @param {boolean}  [options.raw]           read raw cell properties, default false
-     * @param {object}   [options.xlsx]          options to pass thru to XLSX
-     * @param {object}   [options.http]          options ot pass thru to HTTP request
+     * @param {Object}     options
+     * @param {String|URL} [options.url]           the URL or local file name of the .xlsx file
+     * @param {Object}     [options.worksheet]     XLSX worksheet object with cell properties
+     * @param {String}   [options.sheetName]     name of worksheet in workbook, default 1st worksheet
+     * @param {String}   [options.range]         data selection, A1-style range, e.g. "A3:M24", default all rows/columns
+     * @param {Number|String} [options.cells]    minimum number cells in a row for output, or "min-max" e.g. "7-9"
+     * @param {Boolean}  [options.missingCells]  insert null values for missing cells
+     * @param {String}   [options.heading]       PDF section heading or text before data table, default: none
+     * @param {String}   [options.stopHeading]   PDF section heading or text after data table, default: none
+     * @param {Boolean}  [options.repeating]     indicates if table headers are repeated on each page, default: false
+     * @param {Boolean}  [options.trim]          trim cell values, default true
+     * @param {Boolean}  [options.raw]           read raw cell properties, default false
+     * @param {Object}   [options.xlsx]          options to pass thru to XLSX
+     * @param {Object}   [options.http]          options ot pass thru to HTTP request
      */
     constructor(options?: {
-        url: URL | string;
-        worksheet: object;
+        url?: string | URL | undefined;
+        worksheet?: Object | undefined;
         sheetName?: string | undefined;
         range?: string | undefined;
         cells?: string | number | undefined;
@@ -29,14 +29,14 @@ declare class XlsxDataParser {
         repeating?: boolean | undefined;
         trim?: boolean | undefined;
         raw?: boolean | undefined;
-        xlsx?: object | undefined;
-        http?: object | undefined;
+        xlsx?: Object | undefined;
+        http?: Object | undefined;
     });
     options: {
         trim: boolean;
     } & {
-        url: URL | string;
-        worksheet: object;
+        url?: string | URL | undefined;
+        worksheet?: Object | undefined;
         sheetName?: string | undefined;
         range?: string | undefined;
         cells?: string | number | undefined;
@@ -46,10 +46,10 @@ declare class XlsxDataParser {
         repeating?: boolean | undefined;
         trim?: boolean | undefined;
         raw?: boolean | undefined;
-        xlsx?: object | undefined;
-        http?: object | undefined;
+        xlsx?: Object | undefined;
+        http?: Object | undefined;
     };
-    worksheet: object;
+    worksheet: Object | undefined;
     missingCells: boolean | undefined;
     cells: {
         min: number;
@@ -70,7 +70,7 @@ declare class XlsxDataParser {
      * If using an event listener the return value will be an empty array.
      */
     parse(): Promise<any[] | undefined>;
-    workbook: any;
+    workbook: XLSX.WorkBook | undefined;
     topLeft: {
         column: any;
         row: any;
@@ -119,7 +119,7 @@ declare class XlsxDataParser {
      * Performs row filtering.
      *
      * @param {*} row is an array of data values
-     * @returns {boolean} row passed filtering checks
+     * @returns {Boolean} row passed filtering checks
      */
     process(row: any): boolean;
     _headersRow: any;
@@ -131,10 +131,11 @@ declare class XlsxDataParser {
     output(row: any): Promise<void>;
     /**
     *
-    * @param {object} row - the row to check
-    * @param {string} heading - text to compare against
+    * @param {Object} row - the row to check
+    * @param {String} heading - text to compare against
     */
-    compareHeading(row: object, heading: string): any;
+    compareHeading(row: Object, heading: string): any;
     rowsEqual(row1: any, row2: any): boolean;
 }
+import XLSX = require("xlsx");
 //# sourceMappingURL=XlsxDataParser.d.ts.map

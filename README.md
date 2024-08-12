@@ -153,37 +153,37 @@ async function parseDocument() {
 
 XlsxDataParser constructor takes an options object with the following fields. One of `url` or `data` arguments is required.
 
-`{URL|string} url` - The local path or URL of the XLSX document.
+`{String|URL} url` - The local path or URL of the XLSX document.
 
-`{string} data` - XLSX document in a string.
+`{String} data` - XLSX document in a string.
 
 Common Options:
 
-`{string|regexp} heading` - Heading, H1-H6 element, in the document after which the parser will look for a TABLE; optional, default: none. The parser does a string comparison or regexp match looking for first occurrence of `heading` value in a heading element. If neither `heading` or `id` are specified then data output contains all rows from all tables found in the document.
+`{String|regexp} heading` - Heading, H1-H6 element, in the document after which the parser will look for a TABLE; optional, default: none. The parser does a string comparison or regexp match looking for first occurrence of `heading` value in a heading element. If neither `heading` or `id` are specified then data output contains all rows from all tables found in the document.
 
-`{string|regexp} id` - TABLE element id attribute in the document to parse for tabular data; optional, default: none. The parser does a string comparison of the `id` value in TABLE elements ID attribute. If neither `heading` or `id` are specified then data output contains all rows from all tables found in the document.
+`{String|regexp} id` - TABLE element id attribute in the document to parse for tabular data; optional, default: none. The parser does a string comparison of the `id` value in TABLE elements ID attribute. If neither `heading` or `id` are specified then data output contains all rows from all tables found in the document.
 
-`{number} cells` - Minimum number of cells in tabular data; optional, default: 1. The parser will NOT output rows with less than `cells` number of cells.
+`{Number} cells` - Minimum number of cells in tabular data; optional, default: 1. The parser will NOT output rows with less than `cells` number of cells.
 
-`{boolean} newlines` - Preserve new lines in cell data; optional, default: false. When false newlines will be replaced by spaces. Preserving newlines characters will keep the formatting of multiline text such as descriptions. Though, newlines are problematic for cells containing multi-word identifiers and keywords that might be wrapped in the cell text.
+`{Boolean} newlines` - Preserve new lines in cell data; optional, default: false. When false newlines will be replaced by spaces. Preserving newlines characters will keep the formatting of multiline text such as descriptions. Though, newlines are problematic for cells containing multi-word identifiers and keywords that might be wrapped in the cell text.
 
-`{boolean} trim` - trim whitespace from output values, default: true.
+`{Boolean} trim` - trim whitespace from output values, default: true.
 
 ### XLSX Options
 
-`{object} xlsx` - options to pass thru to XLSX.readfile()
-`{boolean} xlsx.cellDates` = return date values instead of text representation, default true.
+`{Object} xlsx` - options to pass thru to XLSX.readfile()
+`{Boolean} xlsx.cellDates` = return date values instead of text representation, default true.
 
 * [XLSX.readFile() options](https://docs.sheetjs.com/docs/api/parse-options)
 
 ### HTTP options
 
-`{object} http` - options to pass thru to HTTP request
-`{string} http.method` - HTTP method, default is "GET"
-`{object} http.params` - object containing URL querystring parameters.
-`{object} http.headers` - object containing HTTP headers
+`{Object} http` - options to pass thru to HTTP request
+`{String} http.method` - HTTP method, default is "GET"
+`{Object} http.params` - object containing URL querystring parameters.
+`{Object} http.headers` - object containing HTTP headers
 `{array}  http.cookies` - array of HTTP cookie strings
-`{string} http.auth` - string for Basic Authentication (Authorization header), i.e. "user:password".
+`{String} http.auth` - string for Basic Authentication (Authorization header), i.e. "user:password".
 
 ## Streaming Usage
 
@@ -237,7 +237,7 @@ RowAsObjectTransform constructor takes an options object with the following fiel
 
 `{array} headers` - array of cell property names; optional, default: none. If a headers array is not specified then parser will assume the first row found contains cell property names.
 
-`{boolean} hasHeaders` - data has a header row, if true and headers options is set then provided headers override header row. Default is true.
+`{Boolean} hasHeaders` - data has a header row, if true and headers options is set then provided headers override header row. Default is true.
 
 If a row is encountered with more cells than in the headers array then extra cell property names will be the ordinal position. For example if the data contains five cells, but only three headers where specified.  Specifying `options = { headers: [ 'name', 'type', 'info' ] }` then the Javascript objects in the stream will contain `{ "name": "value1", "type": "value2", "info": "value3", "4": "value4", "5": "value5" }`.
 
@@ -280,7 +280,7 @@ await pipeline(reader, transform1, writable);
 
 RepeatCellTransform constructor takes an options object with the following fields.
 
-`{number} column` - column index of cell to repeat, default 0.
+`{Number} column` - column index of cell to repeat, default 0.
 
 ### RepeatHeadingTransform
 
@@ -321,9 +321,9 @@ await pipeline(reader, transform1, writable);
 
 RepeatHeadingTransform constructor takes an options object with the following fields.
 
-`{string} header` - column name for the repeating heading field. Can optionally contain an index of where to insert the header in the header row. Default "heading:0".
+`{String} header` - column name for the repeating heading field. Can optionally contain an index of where to insert the header in the header row. Default "heading:0".
 
-`{boolean} hasHeaders` - data has a header row, if true and headers options is set then provided headers override header row. Default is true.
+`{Boolean} hasHeaders` - data has a header row, if true and headers options is set then provided headers override header row. Default is true.
 
 ### FormatCSV and FormatJSON
 

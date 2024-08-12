@@ -1,7 +1,7 @@
 export const XlsxDataParser: {
     new (options?: {
-        url: URL | string;
-        worksheet: object;
+        url?: string | URL | undefined;
+        worksheet?: Object | undefined;
         sheetName?: string | undefined;
         range?: string | undefined;
         cells?: string | number | undefined;
@@ -11,14 +11,25 @@ export const XlsxDataParser: {
         repeating?: boolean | undefined;
         trim?: boolean | undefined;
         raw?: boolean | undefined;
-        xlsx?: object | undefined;
-        http?: object | undefined;
+        xlsx?: Object | undefined;
+        http?: Object | undefined;
     }): import("./XlsxDataParser.js");
 };
 export const XlsxDataReader: {
     new (options: {
-        url: URL | string;
-        worksheet: object;
+        url?: string | URL | undefined;
+        worksheet?: Object | undefined;
+        sheetName?: string | undefined;
+        range?: string | undefined;
+        cells?: string | number | undefined;
+        missingCells?: boolean | undefined;
+        heading?: string | undefined;
+        stopHeading?: string | undefined;
+        repeating?: boolean | undefined;
+        trim?: boolean | undefined;
+        raw?: boolean | undefined;
+        xlsx?: Object | undefined;
+        http?: Object | undefined;
     }): import("./XlsxDataReader.js");
 };
 export const RowAsObjectTransform: {
