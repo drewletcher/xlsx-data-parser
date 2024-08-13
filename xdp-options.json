@@ -1,7 +1,7 @@
 {
   "url": "",
-  "format": "json",
   "output": "",
+  "format": "json",
   "sheetName": null,
   "range": null,
   "heading": null,
@@ -13,8 +13,8 @@
   "RowAsObject.hasHeader": true,
   "RowAsObject.headers": null,
   "RepeatCell.column": null,
-  "RepeatHeading.header": null,
   "RepeatHeading.hasHeader": true,
+  "RepeatHeading.header": null,
   "http": {
     "method": "GET",
     "headers": {},

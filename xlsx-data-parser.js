@@ -99,10 +99,9 @@ async function parseArgs() {
     console.log("");
     console.log("xdp [--options=filename.json] <filename.xlsx|URL> [<output>] [--heading=title] [--id=name] [--cells=#] [--headers=name1,name2,...] [--format=json|csv|rows]");
     console.log("");
-    console.log("  --options    - JSON or JSONC file containing xdp options, optional.");
     console.log("  filename|URL - path name or URL of XLSX file to process, required.");
     console.log("  output       - local path name for output of parsed data, default stdout.");
-    console.log("  --sheet      - sheet name (tab) in workbook to process");
+    console.log("  --options    - JSON or JSONC file containing xdp options, optional.");    console.log("  --sheet      - sheet name (tab) in workbook to process");
     console.log("  --range      - data selection, A1-style range, e.g. \"A3:M24\", default all rows/columns.")
     console.log("  --heading    - text of heading to find in document that precedes desired data table, default none.");
     console.log("  --cells      - minimum number of cells for a data row, default = 1.");
