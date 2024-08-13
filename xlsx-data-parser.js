@@ -11,6 +11,7 @@ const RepeatHeadingTransform = require("./lib/RepeatHeadingTransform.js");
 const RowAsObjectTransform = require("./lib/RowAsObjectTransform.js");
 const FormatCSV = require("./lib/FormatCSV.js");
 const FormatJSON = require("./lib/FormatJSON.js");
+const { parse } = require("jsonc-parser");
 const Package = require("./package.json");
 const colors = require('colors');
 
@@ -50,7 +51,14 @@ async function parseArgs() {
       let nv = arg.split('=');
 
       if (nv[ 0 ] === "--options") {
-        Object.assign(options, JSON.parse(await readFile(nv[ 1 ])));
+        let optionsfile = await readFile(nv[ 1 ], { encoding: 'utf8' });
+        let perrors = [];
+        let poptions = {
+          disallowComments: false,
+          allowTrailingComma: true,
+          allowEmptyContent: false
+        };
+        Object.assign(options, parse(optionsfile, perrors, poptions));
       }
       else if (nv[ 0 ] === "--sheet")
         options.sheetName = parseInt(nv[ 1 ]);
@@ -91,7 +99,7 @@ async function parseArgs() {
     console.log("");
     console.log("xdp [--options=filename.json] <filename.xlsx|URL> [<output>] [--heading=title] [--id=name] [--cells=#] [--headers=name1,name2,...] [--format=json|csv|rows]");
     console.log("");
-    console.log("  --options    - file containing JSON object with xdp options, optional.");
+    console.log("  --options    - JSON or JSONC file containing xdp options, optional.");
     console.log("  filename|URL - path name or URL of XLSX file to process, required.");
     console.log("  output       - local path name for output of parsed data, default stdout.");
     console.log("  --sheet      - sheet name (tab) in workbook to process");
