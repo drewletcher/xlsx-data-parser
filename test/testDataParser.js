@@ -2,6 +2,7 @@
  * test/testParser.js
  */
 
+const _process_events = require("./_processEvents");
 const XlsxDataParser = require("../lib/XlsxDataParser");
 const fs = require("fs");
 const path = require("path");
@@ -15,7 +16,10 @@ async function test(options) {
     let outputName = path.parse(options.url).name + count;
 
     let parser = new XlsxDataParser(options);
+
     let rows = await parser.parse();
+
+    parser.removeAllListeners('error');
 
     let outputFile = "./test/output/XlsxDataParser/" + outputName + ".json";
     console.log("output: " + outputFile);
@@ -28,6 +32,7 @@ async function test(options) {
   }
   catch (err) {
     console.error(err);
+    return 1;
   }
 }
 
@@ -36,6 +41,8 @@ async function test(options) {
   if (await test({ url: "./test/data/xlsx/foofile.xlsx" })) return 1;
   if (await test({ url: "./test/data/xlsx/foofile.xls", sheetName: "foo" })) return 1;
 
-  if (await test({ url: "http://dev.dictadata.net/dictadata/test/data/input/foofile.xlsx", http: { auth: "dicta:data" } })) return 1;
+  let retCode = await test({ url: "http://dev.dictadata.net/dictadata/test/data/input/foofile.xlsx", http: { auth: "dicta:data" } });
+  if (retCode) return 1;
 
+  //process.exit(retCode);
 })();
