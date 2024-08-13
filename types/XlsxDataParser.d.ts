@@ -69,7 +69,7 @@ declare class XlsxDataParser {
      * @returns Rows an array containing arrays of data values.
      * If using an event listener the return value will be an empty array.
      */
-    parse(): Promise<any[] | undefined>;
+    parse(): Promise<any[]>;
     workbook: XLSX.WorkBook | undefined;
     topLeft: {
         column: any;
@@ -121,7 +121,7 @@ declare class XlsxDataParser {
      * @param {*} row is an array of data values
      * @returns {Boolean} row passed filtering checks
      */
-    process(row: any): boolean;
+    examine(row: any): boolean;
     _headersRow: any;
     /**
      * Emits or appends data to output.
