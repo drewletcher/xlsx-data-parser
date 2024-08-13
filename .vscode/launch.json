@@ -106,7 +106,7 @@
       "request": "launch",
       "name": "xdp RepeatCell",
       "program": "xlsx-data-parser.js",
-      "args": [ "--options=.\\test\\optionsRepeatCell.json" ],
+      "args": [ "--options=.\\test\\optionsRepeatCell.jsonc" ],
       "outputCapture": "std",
       "skipFiles": [
         "<node_internals>/**"
@@ -117,7 +117,7 @@
       "request": "launch",
       "name": "xdp RepeatHeading",
       "program": "xlsx-data-parser.js",
-      "args": [ "--options=.\\test\\optionsRepeatHeading.json" ],
+      "args": [ "--options=.\\test\\optionsRepeatHeading.jsonc" ],
       "outputCapture": "std",
       "skipFiles": [
         "<node_internals>/**"
