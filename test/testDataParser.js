@@ -41,8 +41,19 @@ async function test(options) {
   if (await test({ url: "./test/data/xlsx/foofile.xlsx" })) return 1;
   if (await test({ url: "./test/data/xlsx/foofile.xls", sheetName: "foo" })) return 1;
 
-  let retCode = await test({ url: "http://dev.dictadata.net/dictadata/test/data/input/foofile.xlsx", http: { auth: "dicta:data" } });
+  let retCode = await test({
+    url: "http://dev.dictadata.net/dictadata/test/data/input/foofile.xlsx",
+    http: {
+      auth: "dicta:data"
+    }
+  });
   if (retCode) return 1;
 
-  //process.exit(retCode);
+  retCode = await test({
+    url: "./test/data/xlsx/State_Voter_Registration_July_2024.xlsx",
+    raw: true,
+    cellDates: false
+  });
+  if (retCode) return 1;
+
 })();
