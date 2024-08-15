@@ -1,6 +1,6 @@
 {
   "name": "xlsx-data-parser",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Parse, search and stream tabular sheet data using Node.js and xlsx library.",
   "author": "Drew O. Letcher",
   "license": "MIT",
