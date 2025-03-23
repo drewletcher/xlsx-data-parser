@@ -45,9 +45,9 @@ async function test(options) {
   if (await test({ url: "./test/data/xlsx/foofile.xls", sheetName: "foo", missingCells: true })) return 1;
 
   let retCode = await test({
-    url: "http://dev.dictadata.net/dictadata/test/data/input/foofile.xlsx",
+    url: "http://dev.oby4.org/data/test/data/input/foofile.xlsx",
     http: {
-      auth: "dicta:data"
+      auth: "test:data"
     },
     missingCells: true
   });

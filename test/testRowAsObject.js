@@ -37,7 +37,7 @@ async function test(options) {
   if (await test({ url: "./test/data/xlsx/foofile.xlsx" })) return 1;
   if (await test({ url: "./test/data/xlsx/foofile.xls", sheetName: "foo", missingCells: true })) return 1;
 
-  if (await test({ url: "http://dev.dictadata.net/dictadata/test/data/input/foofile.xlsx", http: { auth: "dicta:data" }, missingCells: true })) return 1;
+  if (await test({ url: "http://dev.oby4.org/data/test/data/input/foofile.xlsx", http: { auth: "test:data" }, missingCells: true })) return 1;
 
   if (await test({
     url: "./test/data/xlsx/State_Voter_Registration_July_2024.xlsx",
