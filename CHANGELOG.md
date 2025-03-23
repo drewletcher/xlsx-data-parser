@@ -1,5 +1,7 @@
 # xlsx-data-parser Change Log
 
+- version 1.0.3
+  - refactor: change project group to gitlab:drewletcher
 - version 1.0.2
   - bug fix: pause/resume race condition
   - enhancement: reader cancel() pass thru to parser
