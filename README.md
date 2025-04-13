@@ -4,7 +4,7 @@ Parse and stream tabular data from XLSX, XLS and ODS documents using Node.js and
 
 This readme explains how to use xlsx-data-parser in your code or as a stand-alone program.
 
-Related projects: [html-data-parser](https://gitlab.com/drewletcher/html-data-parser#readme), [pdf-data-parser](https://gitlab.com/drewletcher/pdf-data-parser#readme), [xlsx-data-parser](https://gitlab.com/drewletcher/xlsx-data-parser#readme)
+Related projects: [html-data-parser](https://gitlab.com/drewletcher/html-data-parser#readme), [pdf-data-parser](https://gitlab.com/drewletcher/pdf-data-parser#readme), [text-data-parser](https://gitlab.com/drewletcher/text-data-parser#readme)
 
 ## Installation
 
@@ -24,23 +24,23 @@ npm install xlsx-data-parser
 
 ---
 
-Parse tabular data from a XLSX document.
+Parse tabular data from a sheet in an XLSX workbook document.
 
 ```bash
-xdp [--options=filename.json] [--sheet=sheetname] [--range="A1:Z9"] [--heading=title] [--cells=#] [--headers=name1,name2,...] [--format=json|csv|rows] <filename|URL> [<output-file>]
+xdp <filename|URL> <output-file> --options=filename.json --sheet=sheetname --range="A1:Z9" --heading=title --cells=# --headers=name1,name2,... --format=csv|json|rows
 
   `filename|URL` - path name or URL of XLSX file to process, required.
   `output-file`  - local path name for output of parsed data, default stdout.
-  `--options`    - json or jsonc file containing JSON object with xdp options, optional.
+  `--options`    - json or jsonc file containing JSON object with xdp options, default xdp.options.json.
   `--sheet`      - sheet name (tab) in workbook to process, default none (first sheet in workbook).
   `--range`      - data selection, A1-style range, e.g. "A3:M24", default all rows/columns.
   `--heading`    - text of heading to find in worksheet that precedes desired data, default none.
   `--cells`      - number of cells for a data row, minimum or "min-max", default = "1-256".
   `--headers`    - comma separated list of column names for data, default none the first row contains names.
-  `--format`     - output data format JSON, CSV or rows (JSON arrays), default JSON.
+  `--format`     - output data format CSV, JSON, or ROWS (JSON array of arrays), default JSON.
 ```
 
-Note: If the `xdp` command conflicts with another program on your system use `xdpdataparser` instead.
+Note: If the `xdp` command conflicts with another program on your system use `xlsxdataparser` instead.
 
 ### Options File
 
@@ -118,9 +118,9 @@ xdp https://www.sos.state.tx.us/elections/historical/jan2024.xlsx ./test/output/
 ```
 
 ```bash
-xdp --options="./test/optionsRepeatCell.json"
+xdp --options="./test/RepeatCell.options.json"
 
-optionsRepeatCell.json:
+RepeatCell.options.json:
 {
   "url": "./test/data/xlsx/texas_jan2024.xlsx",
   "output": "./test/output/xdp/repeat_cell.json",

@@ -33,49 +33,62 @@ var options = {
 /**
  * parseArgs
  *   only filename is required
- *   example ["node.exe", "xlsx-data-parser.js", <filename.xlsx|URL>, <output> "--cells=3", "--heading=title", "--repeating" "--headers=c1,c2,.." "--format=json|csv|rows" ]
+ *   example ["node.exe", "xlsx-data-parser.js", <filename.xlsx|URL>, <output> "--cells=3", "--heading=title", "--repeating" "--headers=c1,c2,.." "--format=csv|json|rows" ]
  */
 async function parseArgs() {
+  let clOptions = {}; // command line options
+  let ofOptions = {}; // options file options
+  let optionsfile = "xdp.options.json";
 
   let i = 2;
   while (i < process.argv.length) {
     let arg = process.argv[ i ];
 
     if (arg[ 0 ] !== "-") {
-      if (!options.url)
-        options.url = arg;
+      if (!clOptions.url)
+        clOptions.url = arg;
       else
-        options.output = arg;
+        clOptions.output = arg;
     }
     else {
       let nv = arg.split('=');
 
-      if (nv[ 0 ] === "--options") {
-        let optionsfile = await readFile(nv[ 1 ], { encoding: 'utf8' });
-        let perrors = [];
-        let poptions = {
-          disallowComments: false,
-          allowTrailingComma: true,
-          allowEmptyContent: false
-        };
-        Object.assign(options, parse(optionsfile, perrors, poptions));
-      }
+      if (nv[ 0 ] === "--options")
+        optionsfile = nv[ 1 ];
       else if (nv[ 0 ] === "--sheet")
-        options.sheetName = parseInt(nv[ 1 ]);
+        clOptions.sheetName = parseInt(nv[ 1 ]);
       else if (nv[ 0 ] === "--range")
-        options.range = parseInt(nv[ 1 ]);
+        clOptions.range = parseInt(nv[ 1 ]);
       else if (nv[ 0 ] === "--cells")
-        options.cells = parseInt(nv[ 1 ]);
+        clOptions.cells = parseInt(nv[ 1 ]);
       else if (nv[ 0 ] === "--heading")
-        options.heading = nv[ 1 ];
+        clOptions.heading = nv[ 1 ];
       else if (nv[ 0 ].includes("--headers"))
-        options.headers = nv[ 1 ].split(",");
+        clOptions.headers = nv[ 1 ].split(",");
       else if (nv[ 0 ] === "--format")
-        options.format = nv[ 1 ];
+        clOptions.format = nv[ 1 ].toLowerCase();
     }
     ++i;
   }
 
+  if (optionsfile) {
+    try {
+      let opts = await readFile(optionsfile, { encoding: 'utf8' });
+      let perrors = [];
+      let poptions = {
+        disallowComments: false,
+        allowTrailingComma: true,
+        allowEmptyContent: false
+      };
+      ofOptions = parse(opts, perrors, poptions)
+    }
+    catch (err) {
+      if (err.code !== 'ENOENT' || optionsfile != "xdp.options.json")
+        throw err;
+    }
+  }
+
+  Object.assign(options, ofOptions, clOptions);
 }
 
 /**
@@ -97,16 +110,17 @@ async function parseArgs() {
     console.log("");
     console.log("Parse tabular data from a XLSX file.");
     console.log("");
-    console.log("xdp [--options=filename.json] <filename.xlsx|URL> [<output>] [--heading=title] [--id=name] [--cells=#] [--headers=name1,name2,...] [--format=json|csv|rows]");
+    console.log("xdp <filename.xlsx|URL> <output> --options=filename.json --heading=title --id=name[--cells=# --headers=name1,name2,... --format=csv|json|rows");
     console.log("");
     console.log("  filename|URL - path name or URL of XLSX file to process, required.");
     console.log("  output       - local path name for output of parsed data, default stdout.");
-    console.log("  --options    - JSON or JSONC file containing xdp options, optional.");    console.log("  --sheet      - sheet name (tab) in workbook to process");
+    console.log("  --options    - JSON or JSONC file containing xdp options, default: xdp.options.json.");
+    console.log("  --sheet      - sheet name (tab) in workbook to process");
     console.log("  --range      - data selection, A1-style range, e.g. \"A3:M24\", default all rows/columns.")
     console.log("  --heading    - text of heading to find in document that precedes desired data table, default none.");
     console.log("  --cells      - minimum number of cells for a data row, default = 1.");
     console.log("  --headers    - comma separated list of column names for data, default none first table row contains names.");
-    console.log("  --format     - output data format JSON, CSV or rows (JSON arrays), default JSON.");
+    console.log("  --format     - output data format CSV, JSON, or ROWS (JSON array of arrays), default JSON.");
     console.log("");
     return;
   }
@@ -127,12 +141,12 @@ async function parseArgs() {
       pipes.push(transform);
     }
 
-    if (options?.format.toLowerCase() !== "rows") {
+    if (options?.format !== "rows") {
       let transform = new RowAsObjectTransform(options);
       pipes.push(transform);
     }
 
-    let formatter = options?.format.toLowerCase() === "csv" ? new FormatCSV() : new FormatJSON();
+    let formatter = options?.format === "csv" ? new FormatCSV(options) : new FormatJSON(options);
     pipes.push(formatter);
 
     let writer;
