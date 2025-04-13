@@ -1,5 +1,7 @@
 # xlsx-data-parser Change Log
 
+- version 1.0.5
+  - refactor: change project group to github:drewletcher
 - version 1.0.4
   - refactor: xdp CLI improved options handling
   - bug fix: optional JSON output of rows as arrays

@@ -1,6 +1,6 @@
 {
   "name": "xlsx-data-parser",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Parse, search and stream tabular sheet data using Node.js and xlsx library.",
   "author": "Drew O. Letcher",
   "license": "MIT",
@@ -22,14 +22,9 @@
     "xdp": "xlsx-data-parser.js",
     "xlsxdataparser": "xlsx-data-parser.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/drewletcher/xlsx-data-parser.git"
-  },
-  "homepage": "https://gitlab.com/drewletcher/xlsx-data-parser#readme",
-  "bugs": {
-    "url": "https://gitlab.com/drewletcher/xlsx-data-parser/issues"
-  },
+  "repository": "git@github.com/drewletcher/xlsx-data-parser.git",
+  "homepage": "https://github.com/drewletcher/xlsx-data-parser#readme",
+  "bugs": "https://github.com/drewletcher/xlsx-data-parser/issues",
   "devDependencies": {
     "eslint": "^9.24.0"
   },

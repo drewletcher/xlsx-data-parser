@@ -4,7 +4,7 @@ Parse and stream tabular data from XLSX, XLS and ODS documents using Node.js and
 
 This readme explains how to use xlsx-data-parser in your code or as a stand-alone program.
 
-Related projects: [html-data-parser](https://gitlab.com/drewletcher/html-data-parser#readme), [pdf-data-parser](https://gitlab.com/drewletcher/pdf-data-parser#readme), [text-data-parser](https://gitlab.com/drewletcher/text-data-parser#readme)
+Related projects: [html-data-parser](https://github.com/drewletcher/html-data-parser#readme), [pdf-data-parser](https://github.com/drewletcher/pdf-data-parser#readme), [text-data-parser](https://github.com/drewletcher/text-data-parser#readme)
 
 ## Installation
 
