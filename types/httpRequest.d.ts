@@ -27,7 +27,7 @@ declare function _exports(url: URL | string, options: {
     cookies?: Object | undefined;
     auth?: string | undefined;
     responseType?: string | undefined;
-}, data?: string | Uint8Array | undefined): Promise<any>;
+}, data?: Uint8Array | string): Promise<any>;
 declare namespace _exports {
     export { createReadStream };
 }

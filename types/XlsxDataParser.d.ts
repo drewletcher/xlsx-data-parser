@@ -62,6 +62,7 @@ declare class XlsxDataParser {
     tableFound: boolean;
     tableDone: boolean;
     started: boolean;
+    parsing: boolean;
     paused: boolean;
     cancelled: boolean;
     /**
@@ -94,6 +95,12 @@ declare class XlsxDataParser {
      * Iterate the cells and determine rows.
      */
     parseCells(): Promise<void>;
+    /**
+     * Emits or appends data to output.
+     *
+     * @param {*} row is an array of data values
+     */
+    output(row: any): Promise<void>;
     getAddress(a1_address: any): {
         column: any;
         row: any;
@@ -123,12 +130,6 @@ declare class XlsxDataParser {
      */
     examine(row: any): boolean;
     _headersRow: any;
-    /**
-     * Emits or appends data to output.
-     *
-     * @param {*} row is an array of data values
-     */
-    output(row: any): Promise<void>;
     /**
     *
     * @param {Object} row - the row to check

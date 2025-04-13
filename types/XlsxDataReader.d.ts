@@ -47,6 +47,7 @@ declare class XlsxDataReader {
         xlsx?: Object | undefined;
         http?: Object | undefined;
     };
+    cancel(): void;
     _construct(callback: any): Promise<void>;
     parser: XlsxDataParser | undefined;
     /**
