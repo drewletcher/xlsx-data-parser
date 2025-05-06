@@ -1,5 +1,7 @@
 # xlsx-data-parser Change Log
 
+- version 1.0.6
+  - update: SheetJS 0.20.3 (CDN)
 - version 1.0.5
   - refactor: change project group to github:drewletcher
 - version 1.0.4
