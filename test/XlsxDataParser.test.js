@@ -2,11 +2,11 @@
  * test/testParser.js
  */
 
-const _process_events = require("./_processEvents");
-const XlsxDataParser = require("../lib/XlsxDataParser");
-const fs = require("fs");
-const path = require("path");
-const compareFiles = require("./_compareFiles");
+import "./_processEvents.js";
+import XlsxDataParser from "../lib/XlsxDataParser.js";
+import fs from "node:fs";
+import path from "node:path";
+import compareFiles from "./_compareFiles.js";
 
 var count = 0;
 
@@ -42,7 +42,7 @@ async function test(options) {
   if (await test({ url: "./test/data/xlsx/foofile.xls", sheetName: "foo" })) return 1;
 
   let retCode = await test({
-    url: "http://dev.oby4.org/data/test/data/input/foofile.xlsx",
+    url: "http://dev.oby4.org/data/test/_data/foofile.xlsx",
     http: {
       auth: "test:data"
     }
@@ -51,7 +51,7 @@ async function test(options) {
 
   retCode = await test({
     url: "./test/data/xlsx/State_Voter_Registration_July_2024.xlsx",
-    raw: true,
+    raw: false,
     cellDates: false
   });
   if (retCode) return 1;

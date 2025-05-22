@@ -4,8 +4,10 @@
  * Test SAX.js stream.
  */
 
-const XLSX = require('xlsx');
-const fs = require("node:fs");
+import XLSX from 'xlsx';
+import fs from "node:fs";
+
+console.log("getCells");
 
 let options = {
   raw: true,
@@ -17,9 +19,11 @@ let options = {
   cellDates: true // t:"d" and .v as UTC date string, instead of t:"n" and v. as number
 };
 
-let workbook = XLSX.readFile("./test/data/xlsx/foofile.xlsx", options);
+let data = fs.readFileSync("./test/data/xlsx/foofile.xlsx");
+let workbook = XLSX.read(data, options);
 let worksheet = workbook.Sheets[ "foo" ];
 
+console.log("output => ./test/output/XLSX/getCells.json");
 var output = fs.openSync("./test/output/XLSX/getCells.json", "w");
 fs.writeSync(output, "{\n");
 
@@ -31,3 +35,5 @@ for (let [ a1_address, cell ] of Object.entries(worksheet)) {
 
 fs.writeSync(output, "\n}\n");
 fs.closeSync(output);
+
+console.log("completed");

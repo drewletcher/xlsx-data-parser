@@ -2,12 +2,12 @@
  * test/optionsRepeatHeading.js
  */
 
-const { XlsxDataReader, RowAsObjectTransform, RepeatHeadingTransform } = require("../lib");
-const FormatJSON = require('../lib/FormatJSON');
-const { pipeline } = require('node:stream/promises');
-const fs = require("fs");
-const path = require("path");
-const compareFiles = require("./_compareFiles");
+import { XlsxDataReader, RowAsObjectTransform, RepeatHeadingTransform } from "../lib/index.js";
+import FormatJSON from '../lib/FormatJSON.js';
+import { pipeline } from 'node:stream/promises';
+import fs from "node:fs";
+import path from "node:path";
+import compareFiles from "./_compareFiles.js";
 
 async function test(options) {
 

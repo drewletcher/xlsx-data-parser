@@ -1,6 +1,6 @@
 // http://eslint.org/docs/user-guide/configuring
 
-module.exports = exports = {
+export default {
   "env": {
     "node": true
   },

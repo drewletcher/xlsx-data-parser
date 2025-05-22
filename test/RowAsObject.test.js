@@ -2,12 +2,12 @@
  * test/testObjectTransform.js
  */
 
-const { XlsxDataReader, RowAsObjectTransform } = require("../lib");
-const FormatJSON = require('../lib/FormatJSON');
-const { pipeline } = require('node:stream/promises');
-const fs = require("fs");
-const path = require("path");
-const compareFiles = require("./_compareFiles");
+import { XlsxDataReader, RowAsObjectTransform } from "../lib/index.js";
+import FormatJSON from '../lib/FormatJSON.js';
+import { pipeline } from 'node:stream/promises';
+import fs from "node:fs";
+import path from "node:path";
+import compareFiles from "./_compareFiles.js";
 
 var count = 0;
 
@@ -37,7 +37,7 @@ async function test(options) {
   if (await test({ url: "./test/data/xlsx/foofile.xlsx" })) return 1;
   if (await test({ url: "./test/data/xlsx/foofile.xls", sheetName: "foo", missingCells: true })) return 1;
 
-  if (await test({ url: "http://dev.oby4.org/data/test/data/input/foofile.xlsx", http: { auth: "test:data" }, missingCells: true })) return 1;
+  if (await test({ url: "http://dev.oby4.org/data/test/_data/foofile.xlsx", http: { auth: "test:data" }, missingCells: true })) return 1;
 
   if (await test({
     url: "./test/data/xlsx/State_Voter_Registration_July_2024.xlsx",

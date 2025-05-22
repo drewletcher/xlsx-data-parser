@@ -10,7 +10,7 @@
   "missingCells": false,
   "trim": true,
   "raw": false,
-  "RowAsObject.hasHeader": true,
+  "RowAsObject.hasHeader": false,
   "RowAsObject.headers": null,
   "RepeatCell.column": null,
   "RepeatHeading.hasHeader": true,

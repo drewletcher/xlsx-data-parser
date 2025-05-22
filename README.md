@@ -143,7 +143,7 @@ Some rows may have more cells than other rows. For example a heading or descript
 ### Basic Usage
 
 ```javascript
-const { XlsxDataParser } = require("xlsx-data-parser");
+import { XlsxDataParser } from "xlsx-data-parser";
 
 let parser = new XlsxDataParser({url: "filename.xlsx"});
 
@@ -198,7 +198,7 @@ HTTP requests are mode using Node.js HTTP modules. See the source code file lib/
 XlsxDataReader is a Node.js stream reader implemented with the Object mode option. It uses XlsxDataParser to stream one data row (array) per chunk.
 
 ```javascript
-const { XlsxDataReader } = require("xlsx-data-parser");
+import { XlsxDataReader } from "xlsx-data-parser";
 
 let reader = new XlsxDataReader({url: "filename.xlsx"});
 var rows = [];
@@ -225,8 +225,8 @@ XlsxDataReader constructor options are the same as [XlsxDataParser Options](#xls
 XlsxDataReader operates in Object Mode. The reader outputs arrays (rows). To convert rows into Javascript objects use the RowAsObjectTransform transform.  XlsxDataReader operates in Object mode where a chunk is a Javascript Object of <name,value> pairs.
 
 ```javascript
-const { XlsxDataReader, RowAsObjectTransform } = require("xlsx-data-parser");
-const { pipeline } = require('node:stream/promises');
+import { XlsxDataReader, RowAsObjectTransform } from "xlsx-data-parser";
+import { pipeline } from 'node:stream/promises';
 
 let reader = new XlsxDataReader(options);
 let transform1 = new RowAsObjectTransform(options);
@@ -270,8 +270,8 @@ Dewitt          44  JUL 2023     52,297
 ### Example Usage
 
 ```javascript
-const { XlsxDataReader, RepeatCellTransform } = require("xlsx-data-parser");
-const { pipeline } = require('node:stream/promises');
+import { XlsxDataReader, RepeatCellTransform } from "xlsx-data-parser";
+import { pipeline } from 'node:stream/promises';
 
 let reader = new XlsxDataReader(options);
 let transform1 = new RepeatCellTransform({ column: 0 });
@@ -311,8 +311,8 @@ Total:          150  506,253
 ```
 
 ```javascript
-const { XlsxDataReader, RepeatHeadingTransform } = require("xlsx-data-parser");
-const { pipeline } = require('node:stream/promises');
+import { XlsxDataReader, RepeatHeadingTransform } from "xlsx-data-parser";
+import { pipeline } from 'node:stream/promises';
 
 let reader = new XlsxDataReader(options);
 let transform1 = new RepeatHeadingTransform({header: "County:1:0"});
@@ -334,8 +334,8 @@ RepeatHeadingTransform constructor takes an options object with the following fi
 The `xdpdataparser` CLI program uses the FormatCSV and FormatJSON transforms to covert Javascript Objects into strings that can be saved to a file.
 
 ```javascript
-const { XlsxDataReader, RowAsObjectTransform, FormatCSV } = require("xlsx-data-parser");
-const { pipeline } = require('node:stream/promises');
+import { XlsxDataReader, RowAsObjectTransform, FormatCSV } from "xlsx-data-parser";
+import { pipeline } from 'node:stream/promises';
 
 let reader = new XlsxDataReader(options);
 let transform1 = new RowAsObjectTransform(options);

@@ -65,7 +65,7 @@
     },
     {
       "type": "node-terminal",
-      "name": "---",
+      "name": "--- xdp",
       "request": "launch"
     },
     {
