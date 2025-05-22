@@ -1,5 +1,4 @@
-export = XlsxDataReader;
-declare class XlsxDataReader {
+export default class XlsxDataReader {
     /**
      *
      * @param {Object}     options
@@ -56,5 +55,5 @@ declare class XlsxDataReader {
      */
     _read(size: any): Promise<void>;
 }
-import XlsxDataParser = require("./XlsxDataParser");
+import XlsxDataParser from "./XlsxDataParser.js";
 //# sourceMappingURL=XlsxDataReader.d.ts.map

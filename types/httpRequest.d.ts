@@ -17,7 +17,7 @@
  * @param {Uint8Array|String} [data]
  * @returns
  */
-declare function _exports(url: URL | string, options: {
+declare function httpRequest(url: URL | string, options: {
     base?: string | undefined;
     params?: Object | undefined;
     httpVersion?: string | undefined;
@@ -28,15 +28,15 @@ declare function _exports(url: URL | string, options: {
     auth?: string | undefined;
     responseType?: string | undefined;
 }, data?: Uint8Array | string): Promise<any>;
-declare namespace _exports {
+declare namespace httpRequest {
     export { createReadStream };
 }
-export = _exports;
+export default httpRequest;
 /**
  * Create an object mode readstream from the URL.
  * @param {String} url Override smt.schema with a filename in the same locus.
  * @param {Object} options http request options, see httpRequest
  * @returns a node.js readstream if successful.
 */
-declare function createReadStream(url: string, options: Object): Promise<any>;
+export function createReadStream(url: string, options: Object): Promise<any>;
 //# sourceMappingURL=httpRequest.d.ts.map

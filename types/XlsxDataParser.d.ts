@@ -1,5 +1,4 @@
-export = XlsxDataParser;
-declare class XlsxDataParser {
+export default class XlsxDataParser {
     /**
      *
      * @param {Object}     options
@@ -71,7 +70,7 @@ declare class XlsxDataParser {
      * If using an event listener the return value will be an empty array.
      */
     parse(): Promise<any[]>;
-    workbook: XLSX.WorkBook | undefined;
+    workbook: any;
     topLeft: {
         column: any;
         row: any;
@@ -80,9 +79,9 @@ declare class XlsxDataParser {
         column: any;
         row: any;
     } | undefined;
-    entries: any;
+    entries: [string, any][] | undefined;
     pos: number | undefined;
-    len: any;
+    len: number | undefined;
     prevAddress: {
         column: any;
         row: any;
@@ -138,5 +137,4 @@ declare class XlsxDataParser {
     compareHeading(row: Object, heading: string): any;
     rowsEqual(row1: any, row2: any): boolean;
 }
-import XLSX = require("xlsx");
 //# sourceMappingURL=XlsxDataParser.d.ts.map
