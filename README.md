@@ -2,17 +2,12 @@
 
 Parse and stream tabular data from XLSX, XLS and ODS documents using Node.js and [SheetJS Community Edition](https://sheetjs.com/).
 
-This readme explains how to use xlsx-data-parser in your code or as a stand-alone program.
+This readme explains how to use xlsx-data-parser in your code or as a console program using the command line interface (CLI).
 
-Related projects: [html-data-parser](https://github.com/drewletcher/html-data-parser#readme), [pdf-data-parser](https://github.com/drewletcher/pdf-data-parser#readme), [text-data-parser](https://github.com/drewletcher/text-data-parser#readme)
+Related projects:
+[html-link-parser](https://github.com/drewletcher/html-link-parser#readme) | [html-data-parser](https://github.com/drewletcher/html-data-parser#readme) | [pdf-data-parser](https://github.com/drewletcher/pdf-data-parser#readme) | [text-data-parser](https://github.com/drewletcher/text-data-parser#readme)
 
 ## Installation
-
-For use as command line utility. Requires Node.js 18+.
-
-```bash
-npm -g install xlsx-data-parser
-```
 
 For use as module in a Node.js project. See Developers Guide below.
 
@@ -20,9 +15,13 @@ For use as module in a Node.js project. See Developers Guide below.
 npm install xlsx-data-parser
 ```
 
-## CLI Program
+For use as command line utility. Requires Node.js 18+.
 
----
+```bash
+npm -g install xlsx-data-parser
+```
+
+## Command Line Interface
 
 Parse tabular data from a sheet in an XLSX workbook document.
 
@@ -44,7 +43,7 @@ Note: If the `xdp` command conflicts with another program on your system use `xl
 
 ### Options File
 
-The options file supports options for all xlsx-data-parser modules. Parser will read plain JSON files or JSONC files with Javascript style comments.
+The options file supports options for all xlsx-data-parser modules. Parser will read plain JSON files or JSONC files with Javascript style comments. The default name of the options file is `xdp.options.json` located in the current working directory.
 
 ```javascript
 {
@@ -132,14 +131,6 @@ RepeatCell.options.json:
 
 ## Developer Guide
 
----
-
-### XlsxDataParser
-
-XlsxDataParser given a XLSX document or worksheet will output an array of arrays (rows). Additionally, use the streaming classes XlsxDataReader and RowAsObjectTransform transform to convert the arrays to Javascript objects.  With default settings XlsxDataParser will output __all__ rows found in the worksheet. Using [XlsxDataParser Options](#xlsx-data-parser-options) `heading` the parser can filter content to retrieve data from the desired rows in the worksheet.
-
-Some rows may have more cells than other rows. For example a heading or description paragraph will be a row (array) with one cell (string) value.  See [Notes](#notes) below.
-
 ### Basic Usage
 
 ```javascript
@@ -153,13 +144,53 @@ async function parseDocument() {
 }
 ```
 
+## Using Event Interface
+
+```javascript
+import { XlsxDataParser } from "xlsx-data-parser";
+
+let reader = new XlsxDataParser({url: "filename.xlsx"});
+
+parser.on('data', (row) => {
+  // process row, row is an array of cell values
+  rows.push(row)
+});
+
+parser.on('end', () => {
+});
+
+reader.on('error', (err) => {
+  // log error
+})
+```
+
+### Using Stream Interface
+
+Use the NodeJS Stream interface to process rows as they are parsed from the document.
+
+```javascript
+import { XlsxDataReader } from "xlsx-data-parser";
+import { pipeline } from 'node:stream/promises';
+
+let reader = new XlsxDataReader(options);
+let writable = `<some writable that can handle Object Mode data>`
+
+await pipeline(reader, transform1, writable);
+```
+
+## Class XlsxDataParser
+
+`XlsxDataParser` given a XLSX document or worksheet will output an array of arrays (rows). Additionally, use the streaming classes `XlsxDataReader` and `RowAsObjectTransform` transform to convert the arrays to Javascript objects.  With default settings `XlsxDataParser` will output __all__ rows found in the worksheet. Using [XlsxDataParser Options](#xlsx-data-parser-options) `heading` the parser can filter content to retrieve data from the desired rows in the worksheet.
+
+Some rows may have more cells than other rows. For example a heading or description paragraph will be a row (array) with one cell (string) value.  See [Notes](#notes) below.
+
 ### XlsxDataParser Options
 
-XlsxDataParser constructor takes an options object with the following fields. One of `url` or `worksheet` arguments is required.
+`XlsxDataParser` constructor takes an options object with the following fields. One of `url` or `worksheet` arguments is required.
 
 `{String|URL} url` - The local path or URL of the XLSX document.
 
-`{String} worksheet` - XLSX worksheet object, the module using XlsxDataParser opens the XLSX workbook and choses the worksheet.
+`{String} worksheet` - XLSX worksheet object, the module using `XlsxDataParser` opens the XLSX workbook and choses the worksheet.
 
 Common Options:
 
@@ -189,40 +220,17 @@ HTTP requests are mode using Node.js HTTP modules. See the source code file lib/
 `{Array}  http.cookies` - array of HTTP cookie strings
 `{String} http.auth` - string for Basic Authentication (Authorization header), i.e. "user:password".
 
-## Streaming Usage
+## Class XlsxDataReader
 
----
-
-### XlsxDataReader
-
-XlsxDataReader is a Node.js stream reader implemented with the Object mode option. It uses XlsxDataParser to stream one data row (array) per chunk.
-
-```javascript
-import { XlsxDataReader } from "xlsx-data-parser";
-
-let reader = new XlsxDataReader({url: "filename.xlsx"});
-var rows = [];
-
-reader.on('data', (row) => {
-  rows.push(row)
-});
-
-reader.on('end', () => {
-  // do something with the rows
-});
-
-reader.on('error', (err) => {
-  // log error
-})
-```
+`XlsxDataReader` is a Node.js stream reader implemented with the Object mode option. It uses `XlsxDataParser` event interface to stream one data row (array) per chunk.
 
 ### XlsxDataReader Options
 
-XlsxDataReader constructor options are the same as [XlsxDataParser Options](#xlsx-data-parser-options).
+`XlsxDataReader` constructor options are the same as [XlsxDataParser Options](#xlsx-data-parser-options).
 
-### RowAsObjectTransform
+## Class RowAsObjectTransform
 
-XlsxDataReader operates in Object Mode. The reader outputs arrays (rows). To convert rows into Javascript objects use the RowAsObjectTransform transform.  XlsxDataReader operates in Object mode where a chunk is a Javascript Object of <name,value> pairs.
+`XlsxDataReader` operates in Object Mode. The reader outputs rows (arrays). To convert rows into Javascript objects use the `RowAsObjectTransform` transform.  `RowAsObjectTransform` operates in Object mode where output is a Javascript Object of <name,value> pairs.
 
 ```javascript
 import { XlsxDataReader, RowAsObjectTransform } from "xlsx-data-parser";
@@ -237,7 +245,7 @@ await pipeline(reader, transform1, writable);
 
 ### RowAsObjectTransform Options
 
-RowAsObjectTransform constructor takes an options object with the following fields.
+`RowAsObjectTransform` constructor takes an options object with the following fields.
 
 `{array} headers` - array of cell property names; optional, default: none. If a headers array is not specified then parser will assume the first row found contains cell property names.
 
@@ -245,9 +253,30 @@ RowAsObjectTransform constructor takes an options object with the following fiel
 
 If a row is encountered with more cells than in the headers array then extra cell property names will be the ordinal position. For example if the data contains five cells, but only three headers where specified.  Specifying `options = { headers: [ 'name', 'type', 'info' ] }` then the Javascript objects in the stream will contain `{ "name": "value1", "type": "value2", "info": "value3", "4": "value4", "5": "value5" }`.
 
-### RepeatCellTransform
+## Class RepeatCellTransform
 
-The RepeatCellTransform will normalize data the was probably generated by a report writer. The specified cell will be repeated in following rows that contain one less cell. In the following example "Dewitt" will be repeated in rows 2 and 3.
+`RepeatCellTransform` will normalize data the was probably generated by a report writer. The specified cell will be repeated in following rows that contain one less cell.
+
+```javascript
+import { XlsxDataReader, RepeatCellTransform } from "xlsx-data-parser";
+import { pipeline } from 'node:stream/promises';
+
+let reader = new XlsxDataReader(options);
+let transform1 = new RepeatCellTransform({ column: 0 });
+let writable = <some writable that can handle Object Mode data>
+
+await pipeline(reader, transform1, writable);
+```
+
+### RepeatCellTransform Options
+
+`RepeatCellTransform` constructor takes an options object with the following fields.
+
+`{Number} column` - column index of cell to repeat, default 0.
+
+### Example
+
+In the following example "Dewitt" will be repeated in rows 2 and 3.
 
 **XLSX Worksheet**
 
@@ -267,28 +296,30 @@ Dewitt          44  JUL 2023     52,297
 [ "Dewitt", "44", "JAN 2024", "51,712" ]
 ```
 
-### Example Usage
+## Class RepeatHeadingTransform
+
+`RepeatHeadingTransform` will normalize data the was probably generated by a report writer. Subheadings are rows containing a single cell interspersed in data rows. The header name is inserted in to the header row. The subheading value will be repeated in rows that follow until another subheading is encountered. In the following example `options = {header: "County:1:0"}`.
 
 ```javascript
-import { XlsxDataReader, RepeatCellTransform } from "xlsx-data-parser";
+import { XlsxDataReader, RepeatHeadingTransform } from "xlsx-data-parser";
 import { pipeline } from 'node:stream/promises';
 
 let reader = new XlsxDataReader(options);
-let transform1 = new RepeatCellTransform({ column: 0 });
+let transform1 = new RepeatHeadingTransform({header: "County:1:0"});
 let writable = <some writable that can handle Object Mode data>
 
 await pipeline(reader, transform1, writable);
 ```
 
-### RepeatCellTransform Options
+### RepeatHeadingTransform Options
 
-RepeatCellTransform constructor takes an options object with the following fields.
+`RepeatHeadingTransform` constructor takes an options object with the following fields.
 
-`{Number} column` - column index of cell to repeat, default 0.
+`{String} header` - column name for the repeating heading field. Can optionally contain an index of where to insert the header in the header row. Default "heading:0".
 
-### RepeatHeadingTransform
+`{Boolean} hasHeaders` - data has a header row, if true and headers options is set then provided headers override header row. Default is true.
 
-The RepeatHeadingTransform will normalize data the was probably generated by a report writer. Subheadings are rows containing a single cell interspersed in data rows. The header name is inserted in to the header row. The subheading value will be repeated in rows that follow until another subheading is encountered. In the following example `options = {header: "County:1:0"}`.
+### Example
 
 **XLSX Worksheet**
 
@@ -310,28 +341,9 @@ Total:          150  506,253
 [ "Congressional District 5", "Total:", "150", "506,253" ]
 ```
 
-```javascript
-import { XlsxDataReader, RepeatHeadingTransform } from "xlsx-data-parser";
-import { pipeline } from 'node:stream/promises';
+## Class FormatCSV and FormatJSON
 
-let reader = new XlsxDataReader(options);
-let transform1 = new RepeatHeadingTransform({header: "County:1:0"});
-let writable = <some writable that can handle Object Mode data>
-
-await pipeline(reader, transform1, writable);
-```
-
-### RepeatHeadingTransform Options
-
-RepeatHeadingTransform constructor takes an options object with the following fields.
-
-`{String} header` - column name for the repeating heading field. Can optionally contain an index of where to insert the header in the header row. Default "heading:0".
-
-`{Boolean} hasHeaders` - data has a header row, if true and headers options is set then provided headers override header row. Default is true.
-
-### FormatCSV and FormatJSON
-
-The `xdpdataparser` CLI program uses the FormatCSV and FormatJSON transforms to covert Javascript Objects into strings that can be saved to a file.
+The `xdpdataparser` CLI program uses the `FormatCSV` and `FormatJSON` stringify's Javascript Objects into strings that can be saved to a file.
 
 ```javascript
 import { XlsxDataReader, RowAsObjectTransform, FormatCSV } from "xlsx-data-parser";
@@ -348,11 +360,11 @@ await pipeline(reader, transform1, transform2, process.stdout);
 
 ---
 
-In the source code the xlsx-data-parser.js program and the Javascript files in the /test folder are good examples of using the library modules.
+In the source code the `xlsx-data-parser.js` program and the Javascript files in the `/test` folder are good examples of using the library modules.
 
 ### Hello World
 
-[HelloWorld.xlsx](./test/data/xlsx/helloworld.xlsx) is a XLSX document containing a single worksheet with a single cell containing the string "Hello, world!". The XlsxDataParser output is one row with one cell.
+[HelloWorld.xlsx](./test/data/xlsx/helloworld.xlsx) is a XLSX document containing a single worksheet with a single cell containing the string "Hello, world!". The `XlsxDataParser output is one row with one cell.
 
 ```json
 [
@@ -360,7 +372,7 @@ In the source code the xlsx-data-parser.js program and the Javascript files in t
 ]
 ```
 
-To transform the row array into an object specify the headers option to RowAsObjectTransform transform.
+To transform the row array into an object specify the headers option to `RowAsObjectTransform` transform.
 
 ```javascript
 let transform = new RowAsObjectTransform({
