@@ -1,5 +1,7 @@
 # xlsx-data-parser Change Log
 
+- version 1.1.8
+  - documentation: updated README.md
 - version 1.1.7
   - refactor: convert project to ECMAScript modules
   - testing: update test files
